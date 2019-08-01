@@ -35,8 +35,8 @@
     "url": "git@github.com:softwaregroup-bg/ut-merge.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Software Group",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/softwaregroup-bg/ut-merge/issues"
   },

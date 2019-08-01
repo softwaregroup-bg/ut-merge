@@ -16,3 +16,4 @@ npm-debug.*
 package-lock.json
 yarn.lock
 temp
+.vscode

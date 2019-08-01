@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/softwaregroup-bg/ut-merge/compare/v0.1.1...v1.0.1) (2019-08-01)
+
+
+### Bug Fixes
+
+* version ([0ff0908](https://github.com/softwaregroup-bg/ut-merge/commit/0ff0908))
+
+
+
 ## 0.1.1 (2019-08-01)
 
 

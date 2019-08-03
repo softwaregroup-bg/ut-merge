@@ -52,13 +52,12 @@ Where
   boolean, null or number where applicable
   * `options.mergeStrategies` - whether to apply different merge strategies
   for Arrays located under different paths. Strategies are defined as
-  key value pairs where the key is the path to the array and the 
+  key value pairs where the key is the path to the array and the
   value is a string representing the merge strategy itself.
   The merge stratecies currently available are:
     * `combine` - will concatenate both arrays and filter repeating elements
     * `override` - will override target with source
     * `default` - will apply lodash.mergeWith default strategy
-
 
 Here is how to achieve the same result as with the example above
 based on this alternative signature:

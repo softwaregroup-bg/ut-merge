@@ -41,17 +41,19 @@ const merge = (objects = [], {
         if (!keepStack) return mergeHandlers[fallbackStrategy];
         const path = stack[stack.length - 1].path.join('.');
         return mergeHandlers[mergeStrategies[path] || fallbackStrategy];
-    }
+    };
 
     return mergeWith(...objects, (targetVal, sourceVal, key, target, source) => {
-        while (keepStack) { // avoid looping every time in case it is not needed
-            if (!stack.length) stack.push({source, path: []});
-            const prev = stack[stack.length - 1];
-            if (source === prev.source) {
-                stack.push({source: sourceVal, path: prev.path.concat(key)})
-                break;
+        if (keepStack) { // avoid looping every time in case it is not needed
+            while (true) {
+                if (!stack.length) stack.push({source, path: []});
+                const prev = stack[stack.length - 1];
+                if (source === prev.source) {
+                    stack.push({source: sourceVal, path: prev.path.concat(key)});
+                    break;
+                }
+                stack.pop();
             }
-            stack.pop();
         }
 
         if (Array.isArray(targetVal) && sourceVal) {

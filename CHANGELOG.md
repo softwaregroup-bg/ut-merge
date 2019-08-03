@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/softwaregroup-bg/ut-merge/compare/v1.0.1...v1.0.2) (2019-08-03)
+
+
+### Bug Fixes
+
+* merge strategies ([#1](https://github.com/softwaregroup-bg/ut-merge/issues/1)) ([b110dc6](https://github.com/softwaregroup-bg/ut-merge/commit/b110dc6))
+
+
+
 ## [1.0.1](https://github.com/softwaregroup-bg/ut-merge/compare/v0.1.1...v1.0.1) (2019-08-01)
 
 

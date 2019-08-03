@@ -1,6 +1,6 @@
 {
   "name": "ut-merge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Advanced merge handler",
   "main": "index.js",
   "scripts": {

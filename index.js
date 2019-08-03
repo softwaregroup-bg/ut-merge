@@ -31,33 +31,37 @@ const mergeHandlers = {
     }
 };
 
-const merge = (objects = [], options = {}) => {
-    const {
-        mergeStrategies = {},
-        convert = false
-    } = options;
-    return mergeWith(...objects, (targetVal, sourceVal, key, object, source, stack) => {
-        if (stack) {
-            const path = stack.get('path');
-            const src = stack.get('source');
-            stack.delete('path');
-            stack.delete('source');
-            if (path && src === source) {
-                stack.set('path', path + '.' + key);
-            } else {
-                stack.set('path', key);
+const merge = (objects = [], {
+    mergeStrategies = {},
+    convert = false
+} = {}) => {
+    const stack = [];
+    const keepStack = typeof mergeStrategies === 'object' && Object.keys(mergeStrategies).length > 0;
+    const getMergeHandler = fallbackStrategy => {
+        if (!keepStack) return mergeHandlers[fallbackStrategy];
+        const path = stack[stack.length - 1].path.join('.');
+        return mergeHandlers[mergeStrategies[path] || fallbackStrategy];
+    };
+
+    return mergeWith(...objects, (targetVal, sourceVal, key, target, source) => {
+        if (keepStack) { // avoid looping every time in case it is not needed
+            while (true) {
+                if (!stack.length) stack.push({source, path: []});
+                const prev = stack[stack.length - 1];
+                if (source === prev.source) {
+                    stack.push({source: sourceVal, path: prev.path.concat(key)});
+                    break;
+                }
+                stack.pop();
             }
-            stack.set('source', sourceVal);
         }
+
         if (Array.isArray(targetVal) && sourceVal) {
-            if (Array.isArray(sourceVal)) {
-                const handler = mergeHandlers[mergeStrategies[stack.get('path')]] || mergeHandlers.override;
-                return handler(targetVal, sourceVal);
-            }
-            if (sourceVal instanceof Set) {
-                return mergeHandlers.combine(targetVal, Array.from(sourceVal));
-            }
-        } else if (convert && typeof sourceVal === 'string') {
+            if (Array.isArray(sourceVal)) return getMergeHandler('override')(targetVal, sourceVal);
+            if (sourceVal instanceof Set) return getMergeHandler('combine')(targetVal, Array.from(sourceVal));
+        }
+
+        if (convert && typeof sourceVal === 'string') {
             switch (sourceVal) {
                 case 'true':
                     return true;
